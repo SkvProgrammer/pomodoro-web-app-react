@@ -63,7 +63,7 @@ const Timer = () => {
   };
 
   const startLongBreak = () => {
-    setTime(25 * 60);
+    setTime(15 * 60);
     setElapsedTime(0);
     setIsRunning(true);
     setModalMessage('Long Break Finished!');
