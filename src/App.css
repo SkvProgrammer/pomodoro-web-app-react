@@ -1,0 +1,133 @@
+/* Global Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure body and HTML take the full height of the viewport */
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f6f9; /* Soft, neutral background */
+  font-family: 'Inter', sans-serif; /* Clean, modern font */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+/* Root and Layout */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; /* Make sure the root element spans the full height */
+}
+
+main {
+  flex: 1; /* Allows the main content to expand and push the footer down */
+}
+
+/* Header */
+header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+header .navbar {
+  padding: 0.8rem 1.5rem;
+}
+
+/* Footer */
+footer {
+  background-color: #ffffff;
+  padding: 1rem 0;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Component Wrapper */
+.component-wrapper {
+  background-color: #ffffff; /* Clean card background */
+  border: 1px solid #e0e0e0; /* Subtle border for separation */
+  border-radius: 12px; /* Softer rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Modern shadow effect */
+  padding: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.component-wrapper:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Grid */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+  .component-wrapper {
+    padding: 1.5rem;
+  }
+
+  footer {
+    font-size: 0.8rem;
+  }
+}
+
+/* Button Styling */
+button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+/* Miscellaneous */
+.text-center {
+  text-align: center;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}

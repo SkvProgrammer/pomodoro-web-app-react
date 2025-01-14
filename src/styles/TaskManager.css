@@ -1,0 +1,31 @@
+/* TaskManager.css */
+.task-manager-container {
+    /*background-color: #f7f7f7;
+    */padding: 20px;
+    border-radius: 8px;
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .task-input {
+    margin-bottom: 16px;
+  }
+  
+  .task-add-button {
+    margin-bottom: 16px;
+  }
+  
+  .task-list-item {
+    background-color: #ffffff;
+    margin: 8px 0;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  
+  .task-list-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .MuiIconButton-root {
+    color: #e74c3c;
+  }
+  
