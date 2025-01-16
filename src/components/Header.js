@@ -9,11 +9,11 @@ const Header = () => {
       <Container className="d-flex justify-content-center">
         {/* Logo Section */}
         <Navbar.Brand href="#home" className="d-flex justify-content-center">
-          {/* <img
-            src="/path-to-your-logo.png"
+          <img
+            src="/favicon.webp"
             alt=""
             className="header-logo"
-          /> */}
+          /> 
           <span className="ms-2">Supomodoro</span>
         </Navbar.Brand>
   
