@@ -413,7 +413,7 @@ const Timer = () => {
   
     
       {/* Modal for timer end */}
-      <Modal open={showModal} onClose={handleCloseModal}>
+      <Modal open={showModal}  onClose={handleCloseModal}>
         <Box sx={{ width: '80%', maxWidth: 400, bgcolor: 'background.paper', padding: 3, borderRadius: 2, margin: 'auto', marginTop: 10 }}>
           <Typography variant="h5" align="center">
             {modalMessage}
