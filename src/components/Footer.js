@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <footer className="mt-5 py-3 border-top">
       <Container className="text-center">
-        <p className="mb-0">© {new Date().getFullYear()} Pomodoro App. All rights reserved.</p>
+        <p className="mb-0">© {new Date().getFullYear()} Supomodoro. All rights reserved.</p>
         <p className="small">
           Built with ❤️ by{' '}
           <a
