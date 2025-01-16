@@ -14,7 +14,7 @@ const Header = () => {
             alt=""
             className="header-logo"
           /> */}
-          <span className="ms-2">Pomodoro App</span>
+          <span className="ms-2">Supomodoro</span>
         </Navbar.Brand>
   
         {/* Toggle Button for Mobile */}
