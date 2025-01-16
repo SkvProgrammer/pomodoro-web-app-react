@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, List, ListItem, ListItemText, IconButton, Container, Typography, Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import '../styles/TaskManager.css'; // Import custom styles if needed
+import { TaskAlt } from '@mui/icons-material'; // Importing the TaskAlt icon
+
+
 
 const TaskManager = () => {
   const [tasks, setTasks] = useState([]);
@@ -53,7 +56,14 @@ const TaskManager = () => {
           onChange={(e) => setTask(e.target.value)}
           className="task-input"
         />
-        <Button variant="contained" color="primary" fullWidth onClick={addTask}>
+        <Button variant="contained" sx={{
+  flex: 1,
+  background: 'linear-gradient(45deg, #3F51B5, #2196F3)', // Indigo to blue gradient
+  '&:hover': {
+    background: 'linear-gradient(45deg, #2196F3, #3F51B5)', // Reverse gradient on hover
+  },
+}}
+ color="primary" fullWidth onClick={addTask} startIcon={<TaskAlt />}>
           Add Task
         </Button>
       </Box>

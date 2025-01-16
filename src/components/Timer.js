@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Typography, Container, Modal, Box, TextField } from '@mui/material';
 import '../styles/Timer.css'; // Import custom styles for further styling if required
+import { PlayArrow, PauseCircleFilled, Refresh, Alarm, Settings } from '@mui/icons-material'; // New icons
+
+
 
 const Timer = () => {
   const [time, setTime] = useState(25 * 60); // Default Pomodoro time
@@ -104,71 +107,170 @@ const Timer = () => {
   };
 
   return (
+
     <Container maxWidth="sm" className={`timer-container ${timerType}`} style={{ minHeight: '5vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <Typography variant="h3" align="center" gutterBottom>
         {formatTime(time)}
       </Typography>
-
+    
       {/* Flexbox Layout for Start, Pause, and Reset Buttons */}
-      <Box display="flex" justifyContent="center" gap={2} mb={3}>
-        <Button variant="contained" color="success" onClick={() => setIsRunning(true)} sx={{ flex: 1 }}>
-          Start
-        </Button>
-        <Button variant="contained" color="error" onClick={() => setIsRunning(false)} sx={{ flex: 1 }}>
-          Pause
-        </Button>
-        <Button variant="outlined" color="default" onClick={handleReset} sx={{ flex: 1 }}>
-          Reset
-        </Button>
-      </Box>
+     
+<Box display="flex" justifyContent="center" gap={2} mb={3}>
+  <Button
+    variant="contained"
+    sx={{
+      flex: 1,
+      background: 'linear-gradient(45deg, #FF4081, #F50057)', // Pink gradient
+      '&:hover': {
+        background: 'linear-gradient(45deg, #F50057, #FF4081)', // Reverse gradient on hover
+      },
+    }}
+    onClick={() => setIsRunning(true)}
+    startIcon={<PlayArrow />}
+  >
+    Start
+  </Button>
 
-      {/* Timer Type Buttons */}
-      <Box display="flex" justifyContent="center" gap={2} mb={3}>
-        <Button variant="contained" onClick={startPomodoro} sx={{ flex: 1 }}>
-          Pomodoro
-        </Button>
-        <Button variant="contained" onClick={startShortBreak} sx={{ flex: 1 }}>
-          Short Break
-        </Button>
-        <Button variant="contained" onClick={startLongBreak} sx={{ flex: 1 }}>
-          Long Break
-        </Button>
-      </Box>
+  <Button
+    variant="contained"
+    sx={{
+      flex: 1,
+      background: 'linear-gradient(45deg, #FF3D00, #D50000)', // Red gradient
+      '&:hover': {
+        background: 'linear-gradient(45deg, #D50000, #FF3D00)', // Reverse gradient on hover
+      },
+    }}
+    onClick={() => setIsRunning(false)}
+    startIcon={<PauseCircleFilled />}
+  >
+    Pause
+  </Button>
+</Box>
 
-      {/* Set Timers Button */}
-      <Box display="flex" justifyContent="center" mb={3}>
-        <Button variant="contained" color="info" onClick={() => setShowCustomTimerInputs(!showCustomTimerInputs)} sx={{ flex: 1 }}>
-          Set Custom Timers
-        </Button>
-      </Box>
+<Button
+  variant="contained"
+  sx={{
+    flex: 1,
+    background: 'linear-gradient(45deg, #1DE9B6, #00BFAE)', // Teal gradient
+    '&:hover': {
+      background: 'linear-gradient(45deg, #00BFAE, #1DE9B6)', // Reverse gradient on hover
+    },
+  }}
+  onClick={handleReset}
+  startIcon={<Refresh />}
+>
+  Reset
+</Button>
 
-      {/* Custom Timer Inputs */}
-      {showCustomTimerInputs && (
-        <Box display="flex" flexDirection="column" gap={2} mb={3}>
-          <TextField
-            label="Pomodoro Time (mins)"
-            type="text"
-            value={customTime.pomodoro}
-            onChange={(e) => handleCustomTimeChange('pomodoro', e.target.value)}
-          />
-          <TextField
-            label="Short Break Time (mins)"
-            type="text"
-            value={customTime.shortBreak}
-            onChange={(e) => handleCustomTimeChange('shortBreak', e.target.value)}
-          />
-          <TextField
-            label="Long Break Time (mins)"
-            type="text"
-            value={customTime.longBreak}
-            onChange={(e) => handleCustomTimeChange('longBreak', e.target.value)}
-          />
-          <Button variant="contained" color="primary" onClick={handleSaveCustomTimes}>
-            Save & Apply
-          </Button>
-        </Box>
-      )}
+<br />
 
+<Button
+  variant="contained"
+  sx={{
+    flex: 1,
+    background: 'linear-gradient(45deg, #FFEB3B, #FF9800)', // Yellow to orange gradient
+    '&:hover': {
+      background: 'linear-gradient(45deg, #FF9800, #FFEB3B)', // Reverse gradient on hover
+    },
+  }}
+  onClick={startPomodoro}
+  startIcon={<Alarm />}
+>
+  Pomodoro
+</Button>
+<br />
+
+{/* Timer Type Buttons */}
+<Box display="flex" justifyContent="center" gap={2} mb={3}>
+  <Button
+    variant="contained"
+    sx={{
+      flex: 1,
+      background: 'linear-gradient(45deg, #00E5FF, #00B8D4)', // Blue gradient
+      '&:hover': {
+        background: 'linear-gradient(45deg, #00B8D4, #00E5FF)', // Reverse gradient on hover
+      },
+    }}
+    onClick={startShortBreak}
+    startIcon={<Alarm />}
+  >
+    Short Break
+  </Button>
+
+  <Button
+    variant="contained"
+    sx={{
+      flex: 1,
+      background: 'linear-gradient(45deg, #6200EA, #7C4DFF)', // Purple gradient
+      '&:hover': {
+        background: 'linear-gradient(45deg, #7C4DFF, #6200EA)', // Reverse gradient on hover
+      },
+    }}
+    onClick={startLongBreak}
+    startIcon={<Alarm />}
+  >
+    Long Break
+  </Button>
+</Box>
+
+{/* Set Timers Button */}
+<Box display="flex" justifyContent="center" mb={3}>
+  <Button
+    variant="contained"
+    color="info"
+    sx={{
+      flex: 1,
+      background: 'linear-gradient(45deg, #4CAF50, #8BC34A)', // Green gradient
+      '&:hover': {
+        background: 'linear-gradient(45deg, #8BC34A, #4CAF50)', // Reverse gradient on hover
+      },
+    }}
+    onClick={() => setShowCustomTimerInputs(!showCustomTimerInputs)}
+    startIcon={<Settings />}
+  >
+    Set Custom Timers
+  </Button>
+</Box>
+
+{/* Custom Timer Inputs */}
+{showCustomTimerInputs && (
+  <Box display="flex" flexDirection="column" gap={2} mb={3}>
+    <TextField
+      label="Pomodoro Time (mins)"
+      type="text"
+      value={customTime.pomodoro}
+      onChange={(e) => handleCustomTimeChange('pomodoro', e.target.value)}
+    />
+    <TextField
+      label="Short Break Time (mins)"
+      type="text"
+      value={customTime.shortBreak}
+      onChange={(e) => handleCustomTimeChange('shortBreak', e.target.value)}
+    />
+    <TextField
+      label="Long Break Time (mins)"
+      type="text"
+      value={customTime.longBreak}
+      onChange={(e) => handleCustomTimeChange('longBreak', e.target.value)}
+    />
+    <Button
+      variant="contained"
+      color="primary"
+      sx={{
+        background: 'linear-gradient(45deg, #3F51B5, #1A237E)', // Blue gradient
+        '&:hover': {
+          background: 'linear-gradient(45deg, #1A237E, #3F51B5)', // Reverse gradient on hover
+        },
+      }}
+      onClick={handleSaveCustomTimes}
+      startIcon={<Settings />}
+    >
+      Save & Apply
+    </Button>
+  </Box>
+ )}
+  
+    
       {/* Modal for timer end */}
       <Modal open={showModal} onClose={handleCloseModal}>
         <Box sx={{ width: '80%', maxWidth: 400, bgcolor: 'background.paper', padding: 3, borderRadius: 2, margin: 'auto', marginTop: 10 }}>
@@ -176,7 +278,14 @@ const Timer = () => {
             {modalMessage}
           </Typography>
           <Box display="flex" justifyContent="center" mt={3}>
-            <Button variant="contained" onClick={handleCloseModal} fullWidth>
+            <Button variant="contained" sx={{
+  flex: 1,
+  background: 'linear-gradient(45deg, #FB8C00, #FFEB3B)', // Orange to yellow gradient
+  '&:hover': {
+    background: 'linear-gradient(45deg, #FFEB3B, #FB8C00)', // Reverse gradient on hover
+  },
+}}
+ onClick={handleCloseModal} fullWidth>
               Close
             </Button>
           </Box>
