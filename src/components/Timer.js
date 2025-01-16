@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Typography, Container, Modal, Box, LinearProgress } from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react';
+import { Button, Typography, Container, Modal, Box, TextField } from '@mui/material';
 import '../styles/Timer.css'; // Import custom styles for further styling if required
 
 const Timer = () => {
@@ -9,6 +9,9 @@ const Timer = () => {
   const [modalMessage, setModalMessage] = useState('');
   const [elapsedTime, setElapsedTime] = useState(0); // Track elapsed time
   const [timerType, setTimerType] = useState('');
+  const [customTime, setCustomTime] = useState({ pomodoro: "25", shortBreak: "5", longBreak: "15" }); // Store custom times as strings
+  const [showCustomTimerInputs, setShowCustomTimerInputs] = useState(false); // Manage visibility of custom timer inputs
+  const audioRef = useRef(null); // Reference for the alert audio
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -24,9 +27,13 @@ const Timer = () => {
           const newTime = prev - 1;
           setElapsedTime((prevElapsed) => prevElapsed + 1);
           if (newTime <= 0) {
-            // When the timer hits zero, show the modal
             setIsRunning(false);
+            setModalMessage(timerType === 'pomodoro' ? 'Timer Ended !' : timerType === 'short-break' ? 'Timer Finished!' : 'Timer Finished!');
             setShowModal(true);
+            if (audioRef.current) {
+              audioRef.current.volume = 0.3;
+              audioRef.current.play();
+            }
             return 0;
           }
           return newTime;
@@ -36,10 +43,10 @@ const Timer = () => {
       clearInterval(timer);
     }
     return () => clearInterval(timer);
-  }, [isRunning]);
+  }, [isRunning, timerType]);  // Added `timerType` to the dependency array
 
   const handleReset = () => {
-    setTime(25 * 60);
+    setTime(parseInt(customTime.pomodoro, 10) * 60);
     setElapsedTime(0);
     setIsRunning(false);
   };
@@ -47,7 +54,7 @@ const Timer = () => {
   const handleCloseModal = () => setShowModal(false);
 
   const startPomodoro = () => {
-    setTime(25 * 60);
+    setTime(parseInt(customTime.pomodoro, 10) * 60);
     setElapsedTime(0);
     setIsRunning(true);
     setModalMessage('Pomodoro Ended');
@@ -55,7 +62,7 @@ const Timer = () => {
   };
 
   const startShortBreak = () => {
-    setTime(5 * 60);
+    setTime(parseInt(customTime.shortBreak, 10) * 60);
     setElapsedTime(0);
     setIsRunning(true);
     setModalMessage('Short Break Finished!');
@@ -63,11 +70,37 @@ const Timer = () => {
   };
 
   const startLongBreak = () => {
-    setTime(15 * 60);
+    setTime(parseInt(customTime.longBreak, 10) * 60);
     setElapsedTime(0);
     setIsRunning(true);
     setModalMessage('Long Break Finished!');
     setTimerType('long-break');
+  };
+
+  const handleCustomTimeChange = (type, value) => {
+    if (/^\d*$/.test(value)) { // Allow only numeric input
+      setCustomTime((prev) => ({ ...prev, [type]: value }));
+    }
+  };
+
+  const handleSaveCustomTimes = () => {
+    setShowCustomTimerInputs(false);
+    setCustomTime((prev) => ({
+      pomodoro: parseInt(prev.pomodoro, 10),
+      shortBreak: parseInt(prev.shortBreak, 10),
+      longBreak: parseInt(prev.longBreak, 10),
+    }));
+    if (timerType === 'pomodoro') {
+      startPomodoro();
+    } else if (timerType === 'short-break') {
+      startShortBreak();
+    } else if (timerType === 'long-break') {
+      startLongBreak();
+    }
+
+    setTime(parseInt(customTime.pomodoro, 10) * 60);
+    setElapsedTime(0);
+    setIsRunning(false);
   };
 
   return (
@@ -75,14 +108,8 @@ const Timer = () => {
       <Typography variant="h3" align="center" gutterBottom>
         {formatTime(time)}
       </Typography>
-      <LinearProgress
-        variant="determinate"
-        value={(elapsedTime / time) * 100}
-        className="progress-bar"
-        sx={{ height: 10, borderRadius: 5, marginBottom: 3 }}
-      />
 
-      {/* Flexbox Layout for Buttons */}
+      {/* Flexbox Layout for Start, Pause, and Reset Buttons */}
       <Box display="flex" justifyContent="center" gap={2} mb={3}>
         <Button variant="contained" color="success" onClick={() => setIsRunning(true)} sx={{ flex: 1 }}>
           Start
@@ -95,7 +122,7 @@ const Timer = () => {
         </Button>
       </Box>
 
-      {/* Flexbox Layout for Timer Types */}
+      {/* Timer Type Buttons */}
       <Box display="flex" justifyContent="center" gap={2} mb={3}>
         <Button variant="contained" onClick={startPomodoro} sx={{ flex: 1 }}>
           Pomodoro
@@ -107,6 +134,40 @@ const Timer = () => {
           Long Break
         </Button>
       </Box>
+
+      {/* Set Timers Button */}
+      <Box display="flex" justifyContent="center" mb={3}>
+        <Button variant="contained" color="info" onClick={() => setShowCustomTimerInputs(!showCustomTimerInputs)} sx={{ flex: 1 }}>
+          Set Custom Timers
+        </Button>
+      </Box>
+
+      {/* Custom Timer Inputs */}
+      {showCustomTimerInputs && (
+        <Box display="flex" flexDirection="column" gap={2} mb={3}>
+          <TextField
+            label="Pomodoro Time (mins)"
+            type="text"
+            value={customTime.pomodoro}
+            onChange={(e) => handleCustomTimeChange('pomodoro', e.target.value)}
+          />
+          <TextField
+            label="Short Break Time (mins)"
+            type="text"
+            value={customTime.shortBreak}
+            onChange={(e) => handleCustomTimeChange('shortBreak', e.target.value)}
+          />
+          <TextField
+            label="Long Break Time (mins)"
+            type="text"
+            value={customTime.longBreak}
+            onChange={(e) => handleCustomTimeChange('longBreak', e.target.value)}
+          />
+          <Button variant="contained" color="primary" onClick={handleSaveCustomTimes}>
+            Save & Apply
+          </Button>
+        </Box>
+      )}
 
       {/* Modal for timer end */}
       <Modal open={showModal} onClose={handleCloseModal}>
@@ -121,6 +182,9 @@ const Timer = () => {
           </Box>
         </Box>
       </Modal>
+
+      {/* Hidden audio element */}
+      <audio ref={audioRef} src="/alert.mp3" />
     </Container>
   );
 };
