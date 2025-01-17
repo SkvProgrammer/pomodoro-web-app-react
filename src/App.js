@@ -3,10 +3,11 @@ import Timer from './components/Timer';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import TaskManager from './components/TaskManager';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Toast } from 'react-bootstrap';
 import { IconButton } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import './App.css';
+
 
 const App = () => {
   // State to track theme mode
@@ -65,6 +66,8 @@ const App = () => {
         </Container>
       </div>
       <Footer />
+
+    
     </>
   );
 };

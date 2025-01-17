@@ -1,67 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, List, ListItem, ListItemText, IconButton, Container, Typography, Box } from "@mui/material";
+import { Button, Container, Typography, Box, List, ListItem, ListItemText, IconButton, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { TaskAlt } from "@mui/icons-material";
-import quotes from "../data/quotes"; // Import quotes data
-import "../styles/TaskManager.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import quotes from "../data/quotes";
 
 const TaskManager = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    // Load tasks from localStorage on initial render
+    return JSON.parse(localStorage.getItem("tasks")) || [];
+  });
   const [task, setTask] = useState("");
-  const [quote, setQuote] = useState(null); // State for random quote
 
-  // Load tasks from localStorage when the component mounts
-  useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-    setTasks(storedTasks);
-  }, []);
+  // Display a random quote using toast
+  // const showRandomQuote = () => {
+  //   // toast.dismiss();
+  //   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  //   toast.info(randomQuote, {
+  //     // position: "bottom-right",
+  //     autoClose: 10000, 
+  //     closeButton: false, // Removes the close button
+  //     icon: false, // Removes the icon
 
-  // Update localStorage whenever tasks change
-  useEffect(() => {
-    if (tasks.length > 0) {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-  }, [tasks]);
-
-  // Function to show a random quote
-  const showRandomQuote = () => {
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    console.log("Random Quote Selected: ", randomQuote); // Log the selected quote to debug
-    setQuote(randomQuote);
-  };
+  // });
+    
+  // };
 
   // Add a new task
   const addTask = () => {
     if (task.trim()) {
-      const newTasks = [...tasks, task];
-      setTasks(newTasks);
-      localStorage.setItem("tasks", JSON.stringify(newTasks)); // Update localStorage
-
-      setTask(""); // Clear input field after adding task
+      const updatedTasks = [...tasks, task];
+      setTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks)); // Update localStorage
+      setTask(""); // Clear input field
     }
   };
 
-  // Remove a task and update localStorage
+  // Remove a task
   const removeTask = (index) => {
     const updatedTasks = tasks.filter((_, i) => i !== index);
     setTasks(updatedTasks);
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks)); // Update localStorage
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
 
-  // Set interval to display random quotes every 5 minutes (300,000 milliseconds)
-  useEffect(() => {
-    showRandomQuote(); // Show a quote immediately when the component mounts
-
-    const intervalId = setInterval(() => {
-      showRandomQuote();
-    }, 5 * 60 * 1000); // 5 minutes in milliseconds
-
-    // Cleanup the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, []);
+  // // Show random quote every 5 minutes
+  // useEffect(() => {
+  //   showRandomQuote(); // Show immediately on load
+  //   const intervalId = setInterval(showRandomQuote, (0.1) * 60 * 1000); // 5 minutes
+  //   return () => clearInterval(intervalId); // Cleanup on unmount
+  // }, []);
 
   return (
-    <Container
+<Container
       maxWidth="sm"
       className="task-manager-container"
       sx={{ minHeight: "5vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
@@ -141,6 +132,8 @@ const TaskManager = () => {
           </ListItem>
         ))}
       </List>
+   
+  {/* <ToastContainer /> */}
     </Container>
   );
 };
