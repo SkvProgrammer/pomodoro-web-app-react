@@ -176,13 +176,13 @@ utterance.voice = indianFemaleVoice;
       <Container className="text-center">
         <p className="mb-0">© {new Date().getFullYear()} Supomodoro. All rights reserved.</p>
         <p className="small">
-          Built with ❤️ by{" "}
+          // Built with ❤️ by{" "}
           // <a
           //   href="https://satyamkumarverman.vercel.app"
           //   target="_blank"
           //   rel="noopener noreferrer"
           // >
-            Satyam Kumar Verman
+           Built with ❤️ by Satyam Kumar Verman
           // </a>
         </p>
       </Container>
