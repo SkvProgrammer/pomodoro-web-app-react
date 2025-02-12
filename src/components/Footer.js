@@ -173,19 +173,19 @@ utterance.voice = indianFemaleVoice;
 
   return (
     <footer className="mt-5 py-3 border-top">
-      // <Container className="text-center">
-      //   <p className="mb-0">© {new Date().getFullYear()} Supomodoro. All rights reserved.</p>
-      //   <p className="small">
-      //     // Built with ❤️ by{" "}
-      //     // <a
-      //     //   href="https://satyamkumarverman.vercel.app"
-      //     //   target="_blank"
-      //     //   rel="noopener noreferrer"
-      //     // >
-      //      Built with ❤️ by Satyam Kumar Verman
-      //     // </a>
-      //   </p>
-      // </Container>
+      <Container className="text-center">
+        <p className="mb-0">© {new Date().getFullYear()} Supomodoro. All rights reserved.</p>
+        <p className="small">
+          Built with ❤️ by{" "}
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Satyam Kumar Verman
+          </a>
+        </p>
+      </Container>
       <ToastContainer 
         pauseOnFocusLoss={false}
         pauseOnHover={false}
